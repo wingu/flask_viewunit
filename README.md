@@ -1,7 +1,7 @@
-flask-viewunit
+flask_viewunit
 ==============
 
-Framework for unit testing Flask views. `flask-viewunit` lets you test the
+Framework for unit testing Flask views. `flask_viewunit` lets you test the
 behavior of your views without going all the way to scripting the browser with
 something like Selenium or Watir. It's ideal for verifying server-side
 behavior that's light on JavaScript.
@@ -29,12 +29,12 @@ A test looks something like this:
 
 For an example of how to set up ViewUnit tests for your app, see
 `tests/app.py` (the Flask app being tested), `tests/app_test.py`
-(configuration for ViewUnit) and `tests/test_example.py` (an actual test).
+(configuration for ViewUnit) and `tests/test_example.py` (an actual test of app.py).
 
 
 Dependencies
 ------------
-`flask-viewunit` may work with different versions of the following dependencies.
+`flask_viewunit` may work with different versions of the following dependencies.
 * Python 2.7
 * Flask 0.8
 * Flask-WTF 0.6
