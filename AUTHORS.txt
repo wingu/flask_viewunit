@@ -1,0 +1,9 @@
+The primary authors of flask_filters to date are:
+
+* Dan Milstein
+* Edmund Jorgensen
+* Eric Lundin
+* Matt Papi
+* Owen Raccuglia
+
+Pull requests are welcome.
