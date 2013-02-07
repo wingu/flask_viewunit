@@ -289,16 +289,14 @@ class ViewTestMixin(object):
                                          actual_dict)
 
         has = [("expect_tmpl_has", _get_tmpl_data()),
-                ("expect_session_has", session),
-                ("expect_site_has", _get_site_data())]
+               ("expect_session_has", session)]
         for exp_name, actual_dict in has:
             if exp_name in expects:
                 for exp_key in expects[exp_name]:
                     self._check_has(actual_dict, exp_key, exp_name)
 
         lacks = [("expect_tmpl_lacks", _get_tmpl_data()),
-                  ("expect_session_lacks", session),
-                  ("expect_site_lacks", _get_site_data())]
+                 ("expect_session_lacks", session)]
         for exp_name, actual_dict in lacks:
             if exp_name in expects:
                 for key in expects[exp_name]:
@@ -470,7 +468,6 @@ class ViewTestMixin(object):
 
 TMPL_CALLED = "test_tmpl_called"
 TMPL_DATA = "test_tmpl_data"
-SITE_DATA = "site"
 
 
 def _get_tmpl_data():
@@ -481,36 +478,6 @@ def _get_tmpl_data():
     over later).
     """
     tmpl_data = getattr(flask.g, TMPL_DATA, None)
-    if not tmpl_data:
-        return {}
-
-    # Support Jinja (just a map) and also Cheetah (list of maps).
-    try:
-        tmpl_data.get('_fake', None)
-        # Looks like a mapping, return it
-        return tmpl_data
-    except AttributeError:
-        # Okay, assume we have a list
-        pass
-
-    search_list = tmpl_data
-
-    result = {}
-    # Reverse so that we search in proper order
-    for d in reversed(search_list):
-        result.update(d)
-
-    return result
-
-
-def _get_site_data():
-    """
-    Return a (single) dictionary of data put into the site global object.
-    Meaning, flatten the search list into a single dictionary
-    (but make sure that the order of dict merging properly favors keys from
-    *earlier* dicts in the list over later).
-    """
-    tmpl_data = getattr(flask.g, SITE_DATA, None)
     if not tmpl_data:
         return {}
 
@@ -568,11 +535,6 @@ EXPECT_LIST = [
     "tmpl_has",
     "tmpl_lacks",
     "tmpl_data",
-    "site_data",
-    "site_has",
-    "site_lacks",
-    "perms_has",
-    "perms_lacks",
     "form_errors",
     "cookie_data",
     "header_data",
