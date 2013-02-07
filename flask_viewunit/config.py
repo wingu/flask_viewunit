@@ -58,7 +58,7 @@ def get_app():
     Gets the currently configured app for testing
     """
     assert _APP is not None, \
-            "Call viewunit.config.set_app() before running tests"
+        "Call viewunit.config.set_app() before running tests"
     return _APP
 
 
@@ -67,8 +67,8 @@ def get_session_user_setter():
     Gets the currently configured app for testing
     """
     assert _SESSION_USER_SETTER is not None, \
-            "Call viewunit.config.set_session_user_setter() before " + \
-            "running tests"
+        "Call viewunit.config.set_session_user_setter() before " + \
+        "running tests"
     return _SESSION_USER_SETTER
 
 
@@ -77,5 +77,5 @@ def get_db_select_hook():
     Gets the currently configured app for testing
     """
     assert _DB_SELECT is not None, \
-            "Call viewunit.config.set_db_select_hook() before running tests"
+        "Call viewunit.config.set_db_select_hook() before running tests"
     return _DB_SELECT

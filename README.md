@@ -1,4 +1,4 @@
-flask_viewunit
+flask\_viewunit
 ==============
 
 Framework for unit testing Flask views. `flask_viewunit` lets you test the
@@ -29,7 +29,14 @@ A test looks something like this:
 
 For an example of how to set up ViewUnit tests for your app, see
 `tests/app.py` (the Flask app being tested), `tests/app_test.py`
-(configuration for ViewUnit) and `tests/test_example.py` (an actual test of app.py).
+(configuration for ViewUnit) and `tests/test_example.py`
+(an actual test of app.py).
+
+
+Installation
+------------
+* `pip install git+https://github.com/wingu/flask_viewunit`
+* Clone this repository and run `python setup.py install`
 
 
 Dependencies

@@ -1,5 +1,8 @@
 """
-Test running and assertion machinery for Flask views
+Test running and assertion machinery for Flask views.
+
+For instructions on configuring viewunit, see here:
+https://github.com/wingu/flask_viewunit/blob/master/tests/test_example.py
 """
 
 #pylint: disable=C0302
@@ -17,7 +20,7 @@ import flask
 from nose.tools import eq_, nottest, ok_
 from werkzeug.utils import parse_cookie
 
-from viewunit import config
+from . import config
 
 
 class ViewTestMixin(object):
@@ -208,8 +211,8 @@ class ViewTestMixin(object):
         # If the content-type is text/html and the status code was 200 validate
         # the HTML is well formed.
         # Does not follow redirects.
-        if ('text/html' in response.headers['Content-Type']
-            and response.status_code == 200):
+        if 'text/html' in response.headers['Content-Type'] \
+                and response.status_code == 200:
             parser = html5lib.HTMLParser(strict=True)
             try:
                 parser.parse(response.data)
@@ -274,10 +277,9 @@ class ViewTestMixin(object):
 
         cookies = _get_cookies(response.headers)
         contains = [("expect_tmpl_data", _get_tmpl_data()),
-                     ("expect_session_data", session),
-                     ("expect_cookie_data", cookies),
-                     ("expect_header_data", response.headers),
-                     ("expect_site_data", _get_site_data())]
+                    ("expect_session_data", session),
+                    ("expect_cookie_data", cookies),
+                    ("expect_header_data", response.headers)]
         for exp_name, actual_dict in contains:
             if exp_name in expects:
                 for key, exp_val in expects[exp_name].items():
@@ -319,7 +321,7 @@ class ViewTestMixin(object):
         while exp_parts:
             part = exp_parts.pop(0)
             cur_dict = _dot(cur_dict, part)
-            ok_(cur_dict != None,
+            ok_(cur_dict is not None,
                 "Couldn't find key '%s' in %s (found prefix '%s')" %
                 (exp_key, _show(exp_name), ".".join(found_parts)))
             found_parts.insert(0, part)
@@ -345,7 +347,7 @@ class ViewTestMixin(object):
                 clauses = []
                 values = []
                 for k, v in dct.items():
-                    if v == None:
+                    if v is None:
                         clauses.append("%s is null" % k)
                     else:
                         clauses.append("%s = %%s" % k)
@@ -363,7 +365,7 @@ class ViewTestMixin(object):
                 clauses = []
                 values = []
                 for k, v in dct.items():
-                    if v == None:
+                    if v is None:
                         clauses.append("%s is null" % k)
                     else:
                         clauses.append("%s = %%s" % k)
@@ -428,7 +430,7 @@ class ViewTestMixin(object):
             val_dict = val
             for inner_key, inner_val in val_dict.items():
                 self._check_contains(exp_name, inner_key, inner_val,
-                                    actual_val)
+                                     actual_val)
         else:
             eq_(val, actual_val,
                 "While examining %s, expected key '%s' to yield %s, found %s" %
@@ -459,7 +461,7 @@ class ViewTestMixin(object):
 
     def db_select(self, *args, **kwargs):
         """
-        Get and call the db hook set by viewunit.config.set_db_select_hook
+        Get and call the db hook set by viewunit.set_db_select_hook
         """
         select = config.get_db_select_hook()
         return select(*args, **kwargs)
@@ -585,7 +587,7 @@ EXPECT_LIST = [
     "json",
     "response",
     "well_formed"
-    ]
+]
 EXPECT_DICT = dict([("expect_" + e, True) for e in EXPECT_LIST])
 
 
@@ -627,6 +629,8 @@ def _show(expect_name):
     return expect_name[7:]
 
 
+# Ignore 'too many public methods' warning
+# pylint: disable=R0904
 class ViewTestCase(unittest.TestCase, ViewTestMixin):
     """
     A unit test case for views, inheriting all the rights and
@@ -635,6 +639,8 @@ class ViewTestCase(unittest.TestCase, ViewTestMixin):
     If you're writing a standard view test, this is the class you
     want.
     """
+    # Ignore "could be a function" error
+    # pylint: disable=R0201
     @nottest
     @contextmanager
     def test_request_context(self, request_url, user_id=None, headers=None):
@@ -659,6 +665,7 @@ class ViewTestCase(unittest.TestCase, ViewTestMixin):
             if user_id:
                 set_session_user_id(flask.session, user_id)
             yield client
+    # pylint: enable=R0201
 
     def setUp(self):
         """
@@ -679,6 +686,7 @@ class ViewTestCase(unittest.TestCase, ViewTestMixin):
         Tear down the file/db/fixture resources from setUp
         """
         self.end_full()
+# pylint: enable=R0904
 
 
 def _get_cookies(headers):

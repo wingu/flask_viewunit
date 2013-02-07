@@ -1,6 +1,6 @@
 from nose.tools import ok_
 
-from viewunit.viewunit import config, ViewTestCase
+from flask.ext.viewunit import config, ViewTestCase
 from app import app
 
 

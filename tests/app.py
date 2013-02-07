@@ -13,7 +13,7 @@ from uuid import uuid4
 
 import flask
 
-import viewunit
+from flask.ext import viewunit
 
 
 STATIC_FOLDER = os.path.join(
@@ -29,7 +29,7 @@ def render(name, data):
     expect_tmpl_has), you'll need to provide your own call to render that will
     intercept the arguments before passing them on to flask.render_template.
     """
-    viewunit.viewunit.template_called(name, data)
+    viewunit.template_called(name, data)
     return flask.render_template(name, **data)
 
 

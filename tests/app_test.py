@@ -4,7 +4,7 @@ configuration code at the module level of a file that you have to import in
 order to access the ViewTestCase, like this.
 """
 
-from viewunit import viewunit
+from flask.ext import viewunit
 from app import app
 
 
